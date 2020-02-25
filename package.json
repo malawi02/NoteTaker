@@ -20,5 +20,6 @@
   "bugs": {
     "url": "https://github.com/malawi02/NoteTaker/issues"
   },
-  "homepage": "https://github.com/malawi02/NoteTaker#readme"
+  "homepage": "https://github.com/malawi02/NoteTaker#readme",
+  "devDependencies": {}
 }

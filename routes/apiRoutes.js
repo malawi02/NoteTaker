@@ -1,27 +1,28 @@
-const router = require("express").Router();
-const store = require("../db/store");
+var router = require("express").Router();
+var connection = require("../db/connection");
 
+router.get("/api/newNote", function(req, res) {
+  connection.query("SELECT * FROM notes", function(err, dbnewNote) {
+    if (err) throw err;
 
-router.get("/notes", function(req, res) {
-  store
-    .getNotes()
-    .then(notes => res.json(notes))
-    .catch(err => res.status(500).json(err));
+    res.json(dbnewNote);
+  });
 });
 
-router.post("/notes", (req, res) => {
-  store
-    .addNote(req.body)
-    .then((note) => res.json(note))
-    .catch(err => res.status(500).json(err));
+router.post("/api/newNote", function(req, res) {
+  connection.query("INSERT INTO notes SET ?", [req.body], function(err, result) {
+    if (err) throw err;
+
+    res.json(result);
+  });
 });
 
+router.put("/api/newNote/:id", function(req, res) {
+  connection.query("UPDATE notes SET ? WHERE id = ?", [req.body, req.params.id], function(err, result) {
+    if (err) throw err;
 
-router.delete("/notes/:id", function(req, res) {
-  store
-    .removeNote(req.params.id)
-    .then(() => res.json({ ok: true }))
-    .catch(err => res.status(500).json(err));
+    res.json(result);
+  });
 });
 
 module.exports = router;
